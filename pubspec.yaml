@@ -21,8 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bonfire:
-    path: ".."
+  bonfire: ^3.17.2
   fast_noise: ^1.0.1
   gif_view: ^0.4.0
   url_launcher: ^6.1.14
