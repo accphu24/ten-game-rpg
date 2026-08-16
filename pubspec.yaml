@@ -76,3 +76,6 @@ flutter:
     - assets/images/spritefusion/
     - assets/images/solaria/
     - assets/images/noise/
+
+dependency_overrides:
+  flame: 1.37.0
