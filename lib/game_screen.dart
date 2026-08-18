@@ -1,29 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
+import 'battle_manager.dart';
 
-class GameScreen extends StatelessWidget {
+class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1a1a2e),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'GAMEPLAY\nĐANG XÂY DỰNG',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: 'PressStart2P', fontSize: 14, color: Colors.white, height: 1.8),
-            ),
-            const SizedBox(height: 40),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('QUAY LẠI', style: TextStyle(fontFamily: 'PressStart2P', fontSize: 10, color: Colors.white70)),
-            ),
-          ],
-        ),
+  State<GameScreen> createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<GameScreen> {
+  late final FlameGame _game;
+
+  @override
+  void initState() {
+    super.initState();
+    _game = FlameGame()..add(BattleManager(onBattleEnd: _showResult));
+  }
+
+  void _showResult(bool won) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
+        title: Text(won ? 'THẮNG!' : 'THUA!'),
+        content: Text(won ? 'Bạn đã hạ gục đối thủ.' : 'Bạn đã gục ngã.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            child: const Text('VỀ MENU'),
+          ),
+        ],
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: GameWidget(game: _game));
   }
 }
