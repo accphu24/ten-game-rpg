@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flame/game.dart';
-import 'battle_manager.dart';
-import 'game_connection.dart';
+import 'main_menu_screen.dart';
 
 void main() {
-  runApp(GameWidget(game: MyGame(myPlayerId: 'a')));
+  runApp(const MyApp());
 }
 
-class MyGame extends FlameGame {
-  final String myPlayerId;
-  late GameConnection connection;
-  late BattleManager battleManager;
-
-  MyGame({required this.myPlayerId});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  Future<void> onLoad() async {
-    connection = GameConnection(
-      playerId: myPlayerId,
-      onMessage: (msg) => battleManager.handleMessage(msg),
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Game RPG',
+      debugShowCheckedModeBanner: false,
+      home: const MainMenuScreen(),
     );
-    battleManager = BattleManager(myPlayerId: myPlayerId, connection: connection);
-    add(battleManager);
-    await connection.connect('localhost', 8000);
   }
 }
