@@ -18,6 +18,7 @@ environment:
   sdk: ">=3.4.0 <4.0.0"
 
 dependencies:
+  shared_preferences: ^2.5.4
   web_socket_channel: ^3.0.1
   flutter:
     sdk: flutter
