@@ -3,6 +3,11 @@ import 'package:flame/game.dart';
 import 'battle_manager.dart';
 import 'save_service.dart';
 
+class BattleGame extends FlameGame {
+  @override
+  Color backgroundColor() => const Color(0xFF1a1a2e);
+}
+
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
 
@@ -11,7 +16,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  FlameGame? _game;
+  BattleGame? _game;
 
   @override
   void initState() {
@@ -23,7 +28,7 @@ class _GameScreenState extends State<GameScreen> {
     final save = await SaveService().load();
     final preset = save?.characterPreset ?? 'preset_1';
     setState(() {
-      _game = FlameGame()
+      _game = BattleGame()
         ..add(BattleManager(onBattleEnd: _showResult, playerImagePath: 'characters/$preset.png'));
     });
   }
@@ -51,7 +56,10 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     if (_game == null) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        backgroundColor: Color(0xFF1a1a2e),
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      );
     }
     return Scaffold(body: GameWidget(game: _game!));
   }

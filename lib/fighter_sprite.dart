@@ -26,9 +26,16 @@ class FighterSprite extends PositionComponent with TapCallbacks {
 
   @override
   Future<void> onLoad() async {
-    final image = await Flame.images.load(imagePath);
-    final sprite = Sprite(image, srcPosition: Vector2(0, 2 * 64), srcSize: Vector2(64, 64));
-    add(SpriteComponent(sprite: sprite, size: size));
+    try {
+      final image = await Flame.images.load(imagePath);
+      final sprite = Sprite(image, srcPosition: Vector2(0, 2 * 64), srcSize: Vector2(64, 64));
+      add(SpriteComponent(sprite: sprite, size: size));
+    } catch (e) {
+      add(RectangleComponent(
+        size: size,
+        paint: Paint()..color = isPlayer ? Colors.blue : Colors.red,
+      ));
+    }
 
     _hpText = TextComponent(
       text: '$hp/$maxHp',
