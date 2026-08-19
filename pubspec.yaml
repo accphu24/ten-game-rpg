@@ -54,6 +54,7 @@ flutter:
     - shaders/waterShaderV2.frag
 
   assets:
+    - assets/images/characters/
     - assets/
     - assets/images/
     - assets/images/topdown/
