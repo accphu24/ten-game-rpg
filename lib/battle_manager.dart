@@ -4,10 +4,11 @@ import 'fighter_sprite.dart';
 
 class BattleManager extends Component {
   final void Function(bool won) onBattleEnd;
+  final String playerImagePath;
   late BattleEngine engine;
   final Map<String, FighterSprite> sprites = {};
 
-  BattleManager({required this.onBattleEnd});
+  BattleManager({required this.onBattleEnd, required this.playerImagePath});
 
   @override
   Future<void> onLoad() async {
@@ -18,13 +19,19 @@ class BattleManager extends Component {
 
     engine = BattleEngine(fighters: fighters, onAction: _onAction, onBattleEnd: onBattleEnd);
 
+    final imagePaths = {
+      'player': playerImagePath,
+      'enemy1': 'enemies/skeleton.png',
+    };
+
     for (var i = 0; i < fighters.length; i++) {
       final f = fighters[i];
       final sprite = FighterSprite(
         fighterId: f.id,
         isPlayer: f.isPlayer,
+        imagePath: imagePaths[f.id]!,
         onTap: engine.playerAttack,
-        position: Vector2(80.0 + i * 120, 200),
+        position: Vector2(80.0 + i * 160, 200),
         hp: f.hp,
         maxHp: f.maxHp,
       );

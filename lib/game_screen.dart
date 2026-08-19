@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'battle_manager.dart';
+import 'save_service.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -10,12 +11,21 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  late final FlameGame _game;
+  FlameGame? _game;
 
   @override
   void initState() {
     super.initState();
-    _game = FlameGame()..add(BattleManager(onBattleEnd: _showResult));
+    _setup();
+  }
+
+  Future<void> _setup() async {
+    final save = await SaveService().load();
+    final preset = save?.characterPreset ?? 'preset_1';
+    setState(() {
+      _game = FlameGame()
+        ..add(BattleManager(onBattleEnd: _showResult, playerImagePath: 'characters/$preset.png'));
+    });
   }
 
   void _showResult(bool won) {
@@ -40,6 +50,9 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: GameWidget(game: _game));
+    if (_game == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    return Scaffold(body: GameWidget(game: _game!));
   }
 }
