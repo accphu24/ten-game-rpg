@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'save_data.dart';
 import 'save_service.dart';
 import 'game_screen.dart';
+import 'customize_screen.dart';
 
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen({super.key});
@@ -39,10 +40,12 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GameScreen()));
   }
 
+  void _openCustomize() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CustomizeScreen()));
+  }
+
   void _comingSoon() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Sắp ra mắt')),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sắp ra mắt')));
   }
 
   @override
@@ -55,16 +58,13 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'GAME RPG',
-                    style: TextStyle(fontFamily: 'PressStart2P', fontSize: 22, color: Colors.white),
-                  ),
+                  const Text('GAME RPG', style: TextStyle(fontFamily: 'PressStart2P', fontSize: 22, color: Colors.white)),
                   const SizedBox(height: 60),
                   if (_hasSave) _MenuButton(label: 'TIẾP TỤC', onTap: _continueGame),
                   if (_hasSave) const SizedBox(height: 16),
                   _MenuButton(label: 'CHƠI MỚI', onTap: _startNewGame),
                   const SizedBox(height: 16),
-                  _MenuButton(label: 'TUỲ BIẾN', onTap: _comingSoon),
+                  _MenuButton(label: 'TUỲ BIẾN', onTap: _openCustomize),
                   const SizedBox(height: 16),
                   _MenuButton(label: 'CÀI ĐẶT', onTap: _comingSoon),
                 ],
@@ -87,15 +87,9 @@ class _MenuButton extends StatelessWidget {
       child: Container(
         width: 220,
         padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          color: const Color(0xFF0f3460),
-          border: Border.all(color: Colors.white, width: 3),
-        ),
+        decoration: BoxDecoration(color: const Color(0xFF0f3460), border: Border.all(color: Colors.white, width: 3)),
         alignment: Alignment.center,
-        child: Text(
-          label,
-          style: const TextStyle(fontFamily: 'PressStart2P', fontSize: 12, color: Colors.white),
-        ),
+        child: Text(label, style: const TextStyle(fontFamily: 'PressStart2P', fontSize: 12, color: Colors.white)),
       ),
     );
   }
