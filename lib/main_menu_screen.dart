@@ -3,6 +3,7 @@ import 'save_data.dart';
 import 'save_service.dart';
 import 'game_screen.dart';
 import 'customize_screen.dart';
+import 'pixel_button.dart';
 
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen({super.key});
@@ -60,36 +61,15 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                 children: [
                   const Text('GAME RPG', style: TextStyle(fontFamily: 'PressStart2P', fontSize: 22, color: Colors.white)),
                   const SizedBox(height: 60),
-                  if (_hasSave) _MenuButton(label: 'TIẾP TỤC', onTap: _continueGame),
+                  if (_hasSave) PixelButton(label: 'TIẾP TỤC', onTap: _continueGame),
                   if (_hasSave) const SizedBox(height: 16),
-                  _MenuButton(label: 'CHƠI MỚI', onTap: _startNewGame),
+                  PixelButton(label: 'CHƠI MỚI', onTap: _startNewGame),
                   const SizedBox(height: 16),
-                  _MenuButton(label: 'TUỲ BIẾN', onTap: _openCustomize),
+                  PixelButton(label: 'TUỲ BIẾN', onTap: _openCustomize),
                   const SizedBox(height: 16),
-                  _MenuButton(label: 'CÀI ĐẶT', onTap: _comingSoon),
+                  PixelButton(label: 'CÀI ĐẶT', onTap: _comingSoon),
                 ],
               ),
-      ),
-    );
-  }
-}
-
-class _MenuButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const _MenuButton({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 220,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(color: const Color(0xFF0f3460), border: Border.all(color: Colors.white, width: 3)),
-        alignment: Alignment.center,
-        child: Text(label, style: const TextStyle(fontFamily: 'PressStart2P', fontSize: 12, color: Colors.white)),
       ),
     );
   }
