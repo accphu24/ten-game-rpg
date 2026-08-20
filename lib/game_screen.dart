@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
-import 'package:flame/flame.dart';
-import 'package:flame/sprite.dart';
+import 'fighter_sprite.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
@@ -20,25 +18,19 @@ class MinimalGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    add(RectangleComponent(
-      position: Vector2(50, 50),
-      size: Vector2(100, 100),
-      paint: Paint()..color = const Color(0xFFFF0000),
-    ));
+    camera.viewfinder.anchor = Anchor.topLeft;
 
-    add(TextComponent(text: 'Dang tai anh...', position: Vector2(50, 170)));
+    add(TextComponent(text: 'Test FighterSprite that', position: Vector2(20, 20)));
 
-    try {
-      final image = await Flame.images
-          .load('characters/preset_1.png')
-          .timeout(const Duration(seconds: 5));
-      final sprite = Sprite(image, srcPosition: Vector2(0, 128), srcSize: Vector2(64, 64));
-      add(SpriteComponent(sprite: sprite, size: Vector2(96, 96), position: Vector2(200, 50)));
-      add(TextComponent(text: 'ANH OK!', position: Vector2(50, 200)));
-    } on TimeoutException {
-      add(TextComponent(text: 'TIMEOUT - anh khong load duoc sau 5s', position: Vector2(50, 200)));
-    } catch (e) {
-      add(TextComponent(text: 'LOI: $e', position: Vector2(50, 200)));
-    }
+    final fs = FighterSprite(
+      fighterId: 'test',
+      isPlayer: true,
+      imagePath: 'characters/preset_1.png',
+      onTap: (id) {},
+      position: Vector2(150, 150),
+    );
+    await add(fs);
+
+    add(TextComponent(text: 'Da add xong FighterSprite', position: Vector2(20, 50)));
   }
 }
