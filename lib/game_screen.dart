@@ -5,6 +5,11 @@ import 'battle_manager.dart';
 import 'save_service.dart';
 
 class BattleGame extends FlameGame {
+  final void Function(bool won) onBattleEnd;
+  final String playerImagePath;
+
+  BattleGame({required this.onBattleEnd, required this.playerImagePath});
+
   @override
   Color backgroundColor() => const Color(0xFF1a1a2e);
 
@@ -12,6 +17,7 @@ class BattleGame extends FlameGame {
   Future<void> onLoad() async {
     await super.onLoad();
     camera.viewfinder.anchor = Anchor.topLeft;
+    await world.add(BattleManager(onBattleEnd: onBattleEnd, playerImagePath: playerImagePath));
   }
 }
 
@@ -35,8 +41,7 @@ class _GameScreenState extends State<GameScreen> {
     final save = await SaveService().load();
     final preset = save?.characterPreset ?? 'preset_1';
     setState(() {
-      _game = BattleGame()
-        ..add(BattleManager(onBattleEnd: _showResult, playerImagePath: 'characters/$preset.png'));
+      _game = BattleGame(onBattleEnd: _showResult, playerImagePath: 'characters/$preset.png');
     });
   }
 
