@@ -6,6 +6,12 @@ import 'save_service.dart';
 class BattleGame extends FlameGame {
   @override
   Color backgroundColor() => const Color(0xFF1a1a2e);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    camera.viewfinder.anchor = Anchor.topLeft;
+  }
 }
 
 class GameScreen extends StatefulWidget {
