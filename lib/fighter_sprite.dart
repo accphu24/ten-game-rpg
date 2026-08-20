@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
@@ -27,7 +28,9 @@ class FighterSprite extends PositionComponent with TapCallbacks {
   @override
   Future<void> onLoad() async {
     try {
-      final image = await Flame.images.load(imagePath);
+      final image = await Flame.images
+          .load(imagePath)
+          .timeout(const Duration(seconds: 5));
       final sprite = Sprite(image, srcPosition: Vector2(0, 2 * 64), srcSize: Vector2(64, 64));
       add(SpriteComponent(sprite: sprite, size: size));
     } catch (e) {
