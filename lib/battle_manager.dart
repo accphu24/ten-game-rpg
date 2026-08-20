@@ -36,7 +36,7 @@ class BattleManager extends Component {
         maxHp: f.maxHp,
       );
       sprites[f.id] = sprite;
-      add(sprite);
+      await add(sprite);
     }
 
     _refreshTurnIndicator();
