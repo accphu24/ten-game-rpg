@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
@@ -22,5 +23,20 @@ class MinimalGame extends FlameGame {
       size: Vector2(100, 100),
       paint: Paint()..color = const Color(0xFFFF0000),
     ));
+
+    add(TextComponent(text: 'Dang tai anh...', position: Vector2(50, 170)));
+
+    try {
+      final image = await Flame.images
+          .load('characters/preset_1.png')
+          .timeout(const Duration(seconds: 5));
+      final sprite = Sprite(image, srcPosition: Vector2(0, 128), srcSize: Vector2(64, 64));
+      add(SpriteComponent(sprite: sprite, size: Vector2(96, 96), position: Vector2(200, 50)));
+      add(TextComponent(text: 'ANH OK!', position: Vector2(50, 200)));
+    } on TimeoutException {
+      add(TextComponent(text: 'TIMEOUT - anh khong load duoc sau 5s', position: Vector2(50, 200)));
+    } catch (e) {
+      add(TextComponent(text: 'LOI: $e', position: Vector2(50, 200)));
+    }
   }
 }
