@@ -17,6 +17,14 @@ class BattleGame extends FlameGame {
   Future<void> onLoad() async {
     await super.onLoad();
     camera.viewfinder.anchor = Anchor.topLeft;
+
+    // hinh vuong test: khong qua anh, khong qua manager, chi de xem world co ve duoc gi khong
+    world.add(RectangleComponent(
+      position: Vector2(50, 50),
+      size: Vector2(100, 100),
+      paint: Paint()..color = const Color(0xFFFF0000),
+    ));
+
     await world.add(BattleManager(onBattleEnd: onBattleEnd, playerImagePath: playerImagePath));
   }
 }
@@ -73,6 +81,6 @@ class _GameScreenState extends State<GameScreen> {
         body: Center(child: CircularProgressIndicator(color: Colors.white)),
       );
     }
-    return Scaffold(body: GameWidget(game: _game!));
+    return Scaffold(body: SizedBox.expand(child: GameWidget(game: _game!)));
   }
 }
