@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
+import 'package:flame/components.dart';
 import 'battle_manager.dart';
 import 'save_service.dart';
 
